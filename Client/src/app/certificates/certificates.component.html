@@ -1,0 +1,223 @@
+<div class="d-md-flex flex-md-equal my-md-3 pl-md-3">
+  <div *ngIf="isEditable"
+    class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden"
+    style="width: 50%; border-radius: 21px"
+  >
+    <div class="my-3 py-3">
+      <h2 class="display-5" style="margin-bottom: 40px;">Wszystkie certyfikaty</h2>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="searchCertificates"><i class="fa fa-search" ></i></span>
+        <input type="text" class="form-control" placeholder="Wyszukaj..." aria-label="Username" (keyup)="onKey($event)" aria-describedby="basic-addon1">
+      </div>
+      <!--Tu for z wszystkimi userami-->
+      <div style="max-height: calc(100vh - 400px); overflow-y: auto">
+        <table>
+          <tr>
+            <th>Nazwa</th>
+            <th>Opis</th>
+            <th>Liczba kroków</th>
+          </tr>
+          <tr *ngFor="let certificate of certificates">
+            <td (click)="openCertificateDetails(certificate, template)">{{certificate.name}}</td>
+            <td (click)="openCertificateDetails(certificate, template)">{{certificate.description}}</td>
+            <td (click)="openCertificateDetails(certificate, template)">{{certificate.certificateSteps.length}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="bg-light shadow-sm mx-auto"></div>
+  </div>
+  <div *ngIf="!isEditable"
+    class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden"
+    style="width: 100%; border-radius: 21px"
+  >
+    <div class="my-3 py-3">
+      <h2 class="display-5" style="margin-bottom: 40px;">Wszystkie certyfikaty</h2>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="searchCertificates"><i class="fa fa-search" ></i></span>
+        <input type="text" class="form-control" placeholder="Wyszukaj..." aria-label="Username" (keyup)="onKey($event)" aria-describedby="basic-addon1">
+      </div>
+      <!--Tu for z wszystkimi userami-->
+      <div style="max-height: calc(100vh - 100px); overflow-y: auto">
+        <table>
+          <tr>
+            <th>Nazwa</th>
+            <th>Opis</th>
+          </tr>
+          <tr *ngFor="let certificate of certificates">
+            <td (click)="openCertificateDetails(certificate, template)">{{certificate.name}}</td>
+            <td (click)="openCertificateDetails(certificate, template)">{{certificate.description}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="bg-light shadow-sm mx-auto"></div>
+  </div>
+
+
+  <!--drugie okienko to takie-->
+  <div *ngIf="isEditable"
+    class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden"
+    style="width: 50%; border-radius: 21px"
+  >
+    <div class="my-3 p-3">
+      <h2 class="display-5">Dodaj certyfikat</h2>
+      <form
+        class="needs-validation"
+        novalidate=""
+        #editForm="ngForm"
+        id="form-login"
+        [formGroup]="addCertificateForm"
+        class="text-center"
+      >
+        <div class="row">
+          <div class="col">
+            <label for="name">Nazwa</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                addCertificateForm.get('name').errors &&
+                addCertificateForm.get('name').touched
+              }"
+              formControlName="name"
+              class="form-control"
+              id="name"
+              placeholder=""
+              value=""
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+              addCertificateForm.get('name').touched &&
+              addCertificateForm.get('name').hasError('required')
+              "
+            >
+              Wprowadź nazwę certyfikatu.
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="certDescription">Opis</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                addCertificateForm.get('certDescription').errors &&
+                addCertificateForm.get('certDescription').touched
+              }"
+              formControlName="certDescription"
+              class="form-control"
+              id="certDescription"
+              placeholder=""
+              value=""
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+              addCertificateForm.get('certDescription').touched &&
+              addCertificateForm.get('certDescription').hasError('required')
+              "
+            >
+              Wprowadź opis certyfikatu.
+            </div>
+          </div>
+        </div>
+
+        <p *ngIf="steps.length==0">Brak kroków.</p>
+        <p *ngIf="steps.length!=0">Lista kroków:</p>
+        <div *ngFor="let step of steps; let i = index;">
+          <p>{{i + 1}}. {{step.name}}<i class="fa fa-trash" style="margin-left: 10px; cursor: pointer;" (click)="deleteStep(i)"></i></p>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="nameStep">Nazwa</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                addCertificateForm.get('nameStep').errors &&
+                addCertificateForm.get('nameStep').touched
+              }"
+              formControlName="nameStep"
+              class="form-control"
+              id="nameStep"
+              placeholder=""
+              value=""
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+              addCertificateForm.get('nameStep').touched &&
+              addCertificateForm.get('nameStep').hasError('required')
+              "
+            >
+              Wprowadź ścieżkę.
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="description">Opis kroku</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                addCertificateForm.get('description').errors &&
+                addCertificateForm.get('description').touched
+              }"
+              formControlName="description"
+              class="form-control"
+              id="description"
+              placeholder=""
+              value=""
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+              addCertificateForm.get('description').touched &&
+              addCertificateForm.get('description').hasError('required')
+              "
+            >
+              Wprowadź opis kroku.
+            </div>
+          </div>          
+        </div>
+
+        <hr class="mb-4" />
+        <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!addCertificateForm.valid" (click)="addStep()">
+          Dodaj krok
+        </button>
+        <button class="btn btn-success btn-lg btn-block" [disabled]="steps.length===0 || !addCertificateForm.get('certDescription').valid" (click)="addCertificate()">
+          Dodaj certyfikat
+        </button>
+      </form>
+    </div>
+    <div class="bg-dark shadow-sm mx-auto"></div>
+  </div>
+</div>
+
+
+<!--Podgląd certyfikatu-->
+<ng-template #template>
+  <div class="modal-header text-center">
+    <div class="text-center w-100"> 
+      <p>Certyfikat numer</p>
+      <p style="font-weight: bold;">{{certificateForModal.id}}</p>
+    </div>
+  </div>
+  <div
+    class="modal-body" 
+  >
+    <p>Liczba kroków: {{certificateForModal.certificateSteps.length}}</p>
+    <div *ngFor="let step of certificateForModal.certificateSteps; let i=index">
+      <p>{{i + 1}}. {{step.name}} ({{step.description}})</p>
+    </div>
+    <button *ngIf="!isEditable" class="btn btn-success w-100" style="margin-top: 10px;" (click)="beginProcedure()">Rozpocznij</button>
+    <button *ngIf="isEditable" class="btn btn-danger w-100" style="margin-top: 10px;" (click)="deleteCert()">Usuń certyfikat</button>
+  </div>
+</ng-template>-

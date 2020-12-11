@@ -1,0 +1,220 @@
+<div class="d-md-flex flex-md-equal my-md-3 pl-md-3">
+  <div
+    class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden"
+    style="width: 50%; border-radius: 21px"
+  >
+    <div class="my-3 py-3">
+      <h2 class="display-5" style="margin-bottom: 40px;">Wszyscy użytkownicy</h2>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="searchUsers"><i class="fa fa-search" ></i></span>
+        <input type="text" class="form-control" placeholder="Wyszukaj..." aria-label="Username" (keyup)="onKey($event)" aria-describedby="basic-addon1">
+      </div>
+      <div  style="max-height: calc(100vh - 400px); overflow-y: auto">
+        <table>
+          <tr>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Imię ojca</th>
+            <th>Pesel</th>
+            <th>E-mail</th>
+          </tr>
+          <tr *ngFor="let user of users" >          
+            <td (click)="openUserDetails(user, template)">{{user.name}}</td>
+            <td (click)="openUserDetails(user, template)">{{user.surname}}</td>
+            <td (click)="openUserDetails(user, template)">{{user.fatherName}}</td>
+            <td (click)="openUserDetails(user, template)">{{user.pesel}}</td>
+            <td (click)="openUserDetails(user, template)">{{user.email}}</td>
+          </tr>
+        </table>
+      </div>
+      
+    </div>
+    <div class="bg-light shadow-sm mx-auto"></div>
+  </div>
+
+
+  <!--drugie okienko to takie-->
+  <div
+    class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden"
+    style="width: 50%; border-radius: 21px"
+  >
+    <div class="my-3 p-3">
+      <h2 class="display-5">Dodaj użytkownika</h2>
+      <form
+        class="needs-validation"
+        novalidate=""
+        #editForm="ngForm"
+        id="form-login"
+        [formGroup]="addUserForm"
+        class="text-center"
+        (ngSubmit)="addUser()"
+      >
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name">Imię</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                  addUserForm.get('name').errors &&
+                  addUserForm.get('name').touched
+              }"
+              formControlName="name"
+              class="form-control"
+              id="name"
+              placeholder=""
+              value=""
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                addUserForm.get('name').touched &&
+                addUserForm.get('name').hasError('required')
+              "
+            >
+              Wprowadź imię.
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="surname">Nazwisko</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                  addUserForm.get('surname').errors &&
+                  addUserForm.get('surname').touched
+              }"
+              formControlName="surname"
+              class="form-control"
+              id="surname"
+              placeholder=""
+              value=""
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                addUserForm.get('surname').touched &&
+                addUserForm.get('surname').hasError('required')
+              "
+            >
+              Wprowadź nazwisko.
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="fatherName">Imię ojca</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                  addUserForm.get('fatherName').errors &&
+                  addUserForm.get('fatherName').touched
+              }"
+              formControlName="fatherName"
+              class="form-control"
+              id="fatherName"
+              placeholder=""
+              value=""
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                addUserForm.get('fatherName').touched &&
+                addUserForm.get('fatherName').hasError('required')
+              "
+            >
+              Wprowadź imię ojca.
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="pesel">Pesel</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                  addUserForm.get('pesel').errors &&
+                  addUserForm.get('pesel').touched
+              }"
+              formControlName="pesel"
+              class="form-control"
+              id="pesel"
+              placeholder=""
+              value=""
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                addUserForm.get('pesel').touched &&
+                addUserForm.get('pesel').hasError('required')
+              "
+            >
+              Wprowadź numer pesel.
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="email">Adres e-mail</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                addUserForm.get('email').errors &&
+                addUserForm.get('email').touched
+              }"
+              formControlName="email"
+              class="form-control"
+              id="email"
+              placeholder=""
+              value=""
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+              addUserForm.get('email').touched &&
+              addUserForm.get('email').hasError('required')
+              "
+            >
+              Wprowadź adres e-mail.
+            </div>
+          </div>
+        </div>
+        <hr class="mb-4" />
+        <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!addUserForm.valid">
+          Dodaj użytkownika
+        </button>
+      </form>
+    </div>
+    <div class="bg-dark shadow-sm mx-auto"></div>
+  </div>
+</div>
+
+
+<!--Podgląd użytkownika-->
+<ng-template #template>
+  <div class="modal-header text-center">
+    <div class="text-center w-100"> 
+      <p>Użytkownik numer</p>
+      <p style="font-weight: bold;">{{userForModal.id}}</p>
+    </div>
+  </div>
+  <div
+    class="modal-body" 
+  >
+    <p>Imię: {{userForModal.name}}</p>
+    <p>Nazwisko: {{userForModal.surname}}</p>
+    <p>Imię ojca: {{userForModal.fatherName}}</p>
+    <p>Numer pesel: {{userForModal.pesel}}</p>
+    <p>Adres e-mail: {{userForModal.email}}</p>
+    <button class="btn btn-primary w-100" style="margin-top: 10px;" [routerLink]="['/user/', userForModal.id]" (click)="modalRef.hide()" >Szczegóły</button>
+    <button class="btn btn-danger w-100" style="margin-top: 10px;" (click)="deleteUser()">Usuń użytkownika</button>
+  </div>
+
+</ng-template>
