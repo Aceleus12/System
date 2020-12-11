@@ -97,7 +97,6 @@ export class UsersComponent implements OnInit {
   }
 
   onKey(event) {
-    debugger;
     this.keyWord = event.target.value;
     if (this.keyWord.length === 0) {
       this.getUsers();

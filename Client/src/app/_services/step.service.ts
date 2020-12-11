@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,5 +17,25 @@ export class StepService {
       certificateID: certificateId,
       userId: userId,
     });
+  }
+
+  addFile(stepId: string, file: FormData) {
+    return this.http.put(this.baseUrl + 'gained_step/add_file/' + stepId, file);
+  }
+
+  addComment(stepId: string, comment: string) {
+    debugger;
+    return this.http.put(
+      this.baseUrl +
+        'gained_step/add_comment/' +
+        stepId +
+        '?comment=' +
+        comment,
+      {}
+    );
+  }
+
+  confirmStep(stepId: string) {
+    return this.http.post(this.baseUrl + 'step/confirm/' + stepId, {});
   }
 }

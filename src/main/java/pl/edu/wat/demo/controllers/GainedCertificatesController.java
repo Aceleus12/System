@@ -55,12 +55,12 @@ public class GainedCertificatesController {
 
     @GetMapping("/api/gained_certificates/confirmed/{gainedCertificateID}/{userId}")
     public ResponseEntity<List<GainedStepResponse>> getConfirmedByCertificateAndUser(@PathVariable String gainedCertificateID, @PathVariable String userId) {
-        return new ResponseEntity(gainedStepService.getByCertificateAndUserAndConfirmed(gainedCertificateID,userId,false), HttpStatus.OK);
+        return new ResponseEntity(gainedStepService.getByCertificateAndUserAndConfirmed(gainedCertificateID,userId,true), HttpStatus.OK);
     }
 
     @GetMapping("/api/gained_certificates/unconfirmed/{gainedCertificateID}/{userId}")
     public ResponseEntity<List<GainedStepResponse>> getUnconfirmedByCertificateAndUser(@PathVariable String gainedCertificateID, @PathVariable String userId) {
-        return new ResponseEntity(gainedStepService.getByCertificateAndUserAndConfirmed(gainedCertificateID,userId,true), HttpStatus.OK);
+        return new ResponseEntity(gainedStepService.getByCertificateAndUserAndConfirmed(gainedCertificateID,userId,false), HttpStatus.OK);
     }
 
 

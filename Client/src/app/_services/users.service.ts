@@ -28,7 +28,7 @@ export class UsersService {
   }
 
   getFilteredUsers(word?: string): Observable<User[]> {
-    const params = new HttpParams().set('string', word);
+    const params = new HttpParams().set('name', word);
     return this.http
       .get<User[]>(this.baseUrl + 'with_filters', { observe: 'response', params })
       .pipe(

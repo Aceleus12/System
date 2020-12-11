@@ -1,38 +1,85 @@
-<div style="width: 100%;">
-    <div
+<div style="width: 100%">
+  <div
     class="bg-dark pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden"
-    style="width: 60%; border-radius: 21px; margin:auto;"
+    style="width: 60%; border-radius: 21px; margin: auto"
   >
     <div class="my-3 py-3">
-      <h2 class="display-5" style="margin-bottom: 40px;">{{user.name}} {{user.surname}}</h2>
-      <div  style="max-height: calc(100vh - 400px); overflow-y: auto">
+      <h2 class="display-5" style="margin-bottom: 40px">
+        {{ user.name }} {{ user.surname }}
+      </h2>
+      <h6 class="display-5" style="margin-bottom: 40px">{{ user.id }}</h6>
+      <div style="max-height: calc(100vh - 400px); overflow-y: auto">
         <table>
           <tr>
-            <th>ID</th>
+            <th>Nazwa</th>
+            <th>GainedID</th>
             <th>Status</th>
+            <th>Odebrano</th>
           </tr>
-          <tr *ngFor="let cert of certificates" >     
-            <td>{{cert.certificateID}}</td>     
-            <td><p *ngIf="cert.collected" style="color: green">Uzyskano.</p><p *ngIf="!cert.collected" style="color: orange">W trakcie.</p></td>
+          <tr *ngFor="let cert of certificates">
+            <td (click)="getUnconfirmed(cert.id, stepManagement)">
+              {{ cert.certificateName }}
+            </td>
+            <td>{{cert.id}}</td>
+            <td (click)="getUnconfirmed(cert.id, stepManagement)">
+              <p *ngIf="cert.collected" style="color: green">Uzyskano.</p>
+              <p *ngIf="!cert.collected" style="color: orange">W trakcie.</p>
+            </td>
+            <td (click)="getUnconfirmed(cert.id, stepManagement)">
+              <p *ngIf="cert.gained" style="color: green">Odebrano.</p>
+              <p *ngIf="!cert.gained" style="color: orange">Nie odebrano.</p>
+            </td>
           </tr>
         </table>
-      </div>    
-    </div>
-    <button class="btn btn-success w-100 mb-3" (click)="openStartProcedure(procedure)">Rozpocznij procedurę</button>
-    <div class="bg-light shadow-sm mx-auto"></div>
-  </div>
-  
-</div>
-
-<ng-template #procedure style="width: 900px; box-sizing: content-box;">
-    <div class="modal-header text-center">
-      <div class="text-center w-100"> 
-        <p>Wybierz certyfikat</p>
-        <p style="font-weight: bold;">{{user.id}}</p>
       </div>
     </div>
-    <div class="modal-body">
-      <app-certificates [isEditable]=false (getCertificateId)="startProcedure($event)"></app-certificates>
-    </div>
-  </ng-template>
+    <button
+      class="btn btn-success w-100 mb-3"
+      (click)="openStartProcedure(procedure)"
+    >
+      Rozpocznij procedurę
+    </button>
+    <div class="bg-light shadow-sm mx-auto"></div>
+  </div>
+</div>
 
+<ng-template #procedure style="width: 900px; box-sizing: content-box">
+  <div class="modal-header text-center">
+    <div class="text-center w-100">
+      <p>Wybierz certyfikat</p>
+      <p style="font-weight: bold">{{ user.id }}</p>
+    </div>
+  </div>
+  <div class="modal-body">
+    <app-certificates
+      [isEditable]="false"
+      (getCertificateId)="startProcedure($event)"
+    ></app-certificates>
+  </div>
+</ng-template>
+
+<ng-template #stepManagement style="width: 900px; box-sizing: content-box">
+  <div class="modal-header text-center">
+    <div class="text-center w-100">
+      <p>{{ step.id }}</p>
+      <p style="font-weight: bold">{{ step.certificateStepId }}</p>
+    </div>
+  </div>
+  <div class="modal-body">
+    <p>Rozpoczęto {{ step.startDate | date: "mediumDate" }}</p>
+    <p>Nazwa i opis kroku</p>
+    <p>Komentarz: {{ step.comment }}</p>
+    <button *ngIf="step.fileId!=null" class="btn btn-success mb-3" (click)="downloadFile(step.fileId)">Pobierz załącznik</button>
+    <div class="input-group mb-3">     
+      <input type="text" [(ngModel)]="comment" class="form-control" placeholder="Komentarz..." aria-label="Username"  aria-describedby="basic-addon1">
+      <button class="input-group-text btn btn-success" id="searchCertificates" (click)="addComment(step.id)" [disabled]='comment.length==0'>Skomentuj</button>
+    </div>
+    <div class="input-group mb-3 w-100">     
+      <input #fileInput type="file" placeholder="Komentarz..." (change)="onFileSelect($event)" >
+      <button class="input-group-text btn btn-success" id="searchCertificates" (click)="addFile(step.id)" [disabled]='!file' >Załącz</button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary w-100" (click)="confirmStep(step.id)" >Zatwierdź</button>
+  </div>
+</ng-template>
