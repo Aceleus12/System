@@ -5,6 +5,8 @@ export interface StepToReturn {
     fileId?: any;
     id: string;
     startDate: Date;
+    stepName: string;
+    stepDescription: string;
     stopDate: any;
     userId: string;
 }

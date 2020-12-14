@@ -38,4 +38,12 @@ export class StepService {
   confirmStep(stepId: string) {
     return this.http.post(this.baseUrl + 'step/confirm/' + stepId, {});
   }
+
+  downloadFile(id: string) {
+    window.open('http://localhost:8080/api/file/' + id);
+  }
+
+  addFileFromAdmin(stepId: string, file: FormData) {
+    return this.http.put(this.baseUrl + 'step/add_file/' + stepId, file);
+  }
 }

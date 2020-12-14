@@ -14,6 +14,7 @@ import { Certificate } from '../_models/certificate';
 import { CertificateToAdd } from '../_models/certificateToAdd';
 import { StepToAdd } from '../_models/stepToAdd';
 import { CertificateService } from '../_services/certificate.service';
+import { StepService } from '../_services/step.service';
 
 @Component({
   selector: 'app-certificates',
@@ -32,6 +33,8 @@ export class CertificatesComponent implements OnInit {
 
   addCertificateForm: FormGroup;
   modalRef: BsModalRef;
+  files = [];
+  file: any;
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
@@ -43,7 +46,8 @@ export class CertificatesComponent implements OnInit {
   constructor(
     private certificateService: CertificateService,
     private fb: FormBuilder,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private stepService: StepService
   ) {}
 
   ngOnInit() {
@@ -73,11 +77,10 @@ export class CertificatesComponent implements OnInit {
   }
 
   addCertificate() {
-    debugger;
     this.certificate = {
       name: this.addCertificateForm.get('name').value,
       certificateSteps: this.steps,
-      description: this.addCertificateForm.get('certDescription').value
+      description: this.addCertificateForm.get('certDescription').value,
     };
 
     this.certificateService.addCertificate(this.certificate).subscribe(
@@ -110,15 +113,17 @@ export class CertificatesComponent implements OnInit {
 
   openCertificateDetails(cert: Certificate, template: TemplateRef<any>) {
     this.certificateForModal = cert;
-    this.modalRef = this.modalService.show(template);
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+    this.modalRef.onHide.subscribe(() => {
+      this.files = [];
+    });
   }
-
   deleteCert() {
     this.certificateService
       .deleteCertificate(this.certificateForModal.id)
       .subscribe(
         (next) => {
-          this.getCertificates(); 
+          this.getCertificates();
           this.modalRef.hide();
         },
         (error) => {
@@ -128,7 +133,6 @@ export class CertificatesComponent implements OnInit {
   }
 
   onKey(event) {
-    debugger;
     this.keyWord = event.target.value;
     if (this.keyWord.length === 0) {
       this.getCertificates();
@@ -151,5 +155,39 @@ export class CertificatesComponent implements OnInit {
   beginProcedure() {
     this.getCertificateId.emit(this.certificateForModal.id);
     this.modalRef.hide();
+  }
+
+  downloadFile(id: string) {
+    this.stepService.downloadFile(id);
+  }
+
+  addFile(id: string, fileNum: number) {
+    const formData = new FormData();
+    const file = this.files.find((e) => e.id === fileNum).file;
+    debugger;
+    formData.append('file', file);
+    this.stepService.addFileFromAdmin(id, formData).subscribe(
+      (next) => {
+        console.log('success');
+        //this.reloadSteps();
+      },
+      (error) => {
+        console.log('error');
+      }
+    );
+  }
+
+  onFileSelect(event, id: number) {
+    if (event.target.files.length > 0) {
+      debugger;
+      this.files.push({
+        id: id,
+        file: event.target.files[0],
+      });
+    }
+  }
+
+  containsFile(id: number): boolean {
+    return this.files.some((e) => e.id === id);
   }
 }

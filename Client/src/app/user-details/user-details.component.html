@@ -67,7 +67,8 @@
   </div>
   <div class="modal-body">
     <p>Rozpoczęto {{ step.startDate | date: "mediumDate" }}</p>
-    <p>Nazwa i opis kroku</p>
+    <p>Etap: {{ step.stepName }}</p>
+    <p>{{ step.stepDescription }}</p>
     <p>Komentarz: {{ step.comment }}</p>
     <button *ngIf="step.fileId!=null" class="btn btn-success mb-3" (click)="downloadFile(step.fileId)">Pobierz załącznik</button>
     <div class="input-group mb-3">     
@@ -75,7 +76,7 @@
       <button class="input-group-text btn btn-success" id="searchCertificates" (click)="addComment(step.id)" [disabled]='comment.length==0'>Skomentuj</button>
     </div>
     <div class="input-group mb-3 w-100">     
-      <input #fileInput type="file" placeholder="Komentarz..." (change)="onFileSelect($event)" >
+      <input #fileInput type="file" placeholder="Dołącz plik..." (change)="onFileSelect($event)" >
       <button class="input-group-text btn btn-success" id="searchCertificates" (click)="addFile(step.id)" [disabled]='!file' >Załącz</button>
     </div>
   </div>
