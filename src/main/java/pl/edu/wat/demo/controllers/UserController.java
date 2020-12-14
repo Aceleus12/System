@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/api/user/with_filters")
-    public ResponseEntity<List<UserResponse>> getAllWithFilters(@RequestParam String name) {
+    public ResponseEntity<List<UserResponse>> getAllWithFilters(@RequestParam String name ) {
         return new ResponseEntity(userService.getWithFilters(name), HttpStatus.OK);
     }
 

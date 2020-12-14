@@ -14,6 +14,8 @@ public class GainedStepResponse {
     private String id;
     private boolean confirmed;
     private String comment;
+    private String stepName;
+    private String stepDescription;
     private Date startDate;
     private Optional<Date> stopDate;
     private Optional<String> fileId;
