@@ -3,12 +3,13 @@ package pl.edu.wat.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.edu.wat.demo.dtos.*;
+import pl.edu.wat.demo.dtos.response.GainedCertificateResponse;
+import pl.edu.wat.demo.dtos.response.GainedStepResponse;
 import pl.edu.wat.demo.services.GainedCertificateService;
 import pl.edu.wat.demo.services.GainedStepService;
-import pl.edu.wat.demo.services.UserService;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class GainedCertificatesController {
         this.gainedStepService = gainedStepService;
     }
 
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @DeleteMapping("/api/gained_certificates/{id}")
     public ResponseEntity remove(@PathVariable String id){
         if(gainedCertificateService.removeById(id)) {
@@ -33,21 +35,25 @@ public class GainedCertificatesController {
         else return new ResponseEntity((HttpStatus.NOT_FOUND));
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/api/gained_certificates/{id}")
     public ResponseEntity<GainedCertificateResponse> get(@PathVariable String id) {
         return new ResponseEntity(gainedCertificateService.get(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/api/gained_certificates")
     public ResponseEntity<List<GainedCertificateResponse>> getAll() {
         return new ResponseEntity(gainedCertificateService.getAll(), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping("/api/gained_certificates/add_file/{id}")
     public ResponseEntity addFile(@RequestParam MultipartFile file, @PathVariable String stepId) {
         return new ResponseEntity(gainedCertificateService.addFile(file,stepId),HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping("/api/gained_certificates/confirm_collecting/{id}")
     public ResponseEntity confirmCollecting(@PathVariable String stepId) {
         GainedCertificateResponse gainedCertificateResponse = gainedCertificateService.confirmCollecting(stepId);
@@ -58,11 +64,13 @@ public class GainedCertificatesController {
 
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/api/gained_certificates/confirmed/{gainedCertificateID}/{userId}")
     public ResponseEntity<List<GainedStepResponse>> getConfirmedByCertificateAndUser(@PathVariable String gainedCertificateID, @PathVariable String userId) {
         return new ResponseEntity(gainedStepService.getByCertificateAndUserAndConfirmed(gainedCertificateID,userId,true), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/api/gained_certificates/unconfirmed/{gainedCertificateID}/{userId}")
     public ResponseEntity<List<GainedStepResponse>> getUnconfirmedByCertificateAndUser(@PathVariable String gainedCertificateID, @PathVariable String userId) {
         return new ResponseEntity(gainedStepService.getByCertificateAndUserAndConfirmed(gainedCertificateID,userId,false), HttpStatus.OK);

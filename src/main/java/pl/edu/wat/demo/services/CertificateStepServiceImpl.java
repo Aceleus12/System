@@ -3,7 +3,7 @@ package pl.edu.wat.demo.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pl.edu.wat.demo.dtos.StepResponse;
+import pl.edu.wat.demo.dtos.response.StepResponse;
 import pl.edu.wat.demo.entities.StepEntity;
 import pl.edu.wat.demo.repositories.CertificateStepRepository;
 

@@ -1,9 +1,8 @@
 package pl.edu.wat.demo.services;
 
 import org.springframework.web.multipart.MultipartFile;
-import pl.edu.wat.demo.dtos.GainedStepResponse;
-import pl.edu.wat.demo.dtos.StartGainingCertificateRequest;
-import pl.edu.wat.demo.dtos.GainedCertificateResponse;
+import pl.edu.wat.demo.dtos.request.StartGainingCertificateRequest;
+import pl.edu.wat.demo.dtos.response.GainedCertificateResponse;
 
 import java.util.List;
 

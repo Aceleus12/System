@@ -2,9 +2,11 @@ package pl.edu.wat.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.wat.demo.dtos.*;
+import pl.edu.wat.demo.dtos.request.CertificateRequest;
+import pl.edu.wat.demo.dtos.request.StepRequest;
+import pl.edu.wat.demo.dtos.response.CertificateResponse;
+import pl.edu.wat.demo.dtos.response.StepResponse;
 import pl.edu.wat.demo.entities.CertificateEntity;
-import pl.edu.wat.demo.entities.FileEntity;
 import pl.edu.wat.demo.entities.StepEntity;
 import pl.edu.wat.demo.repositories.CertificateRepository;
 import pl.edu.wat.demo.repositories.CertificateStepRepository;

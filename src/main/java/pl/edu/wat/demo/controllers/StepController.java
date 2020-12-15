@@ -3,12 +3,10 @@ package pl.edu.wat.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pl.edu.wat.demo.dtos.AddCommentToStepRequest;
-import pl.edu.wat.demo.dtos.StartGainingCertificateRequest;
-import pl.edu.wat.demo.entities.FileEntity;
-import pl.edu.wat.demo.repositories.CertificateStepRepository;
+import pl.edu.wat.demo.dtos.request.StartGainingCertificateRequest;
 import pl.edu.wat.demo.services.*;
 
 @RestController
@@ -28,6 +26,7 @@ public class StepController {
         this.certificateStepService = certificateStepService;
     }
 
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping("/api/start_procedure")
     public ResponseEntity startProcedure(@RequestBody StartGainingCertificateRequest startGainingCertificateRequest) {
         int response_code = gainedCertificateService.startProcedure(startGainingCertificateRequest);
@@ -41,6 +40,8 @@ public class StepController {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
     }
+
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping("/api/step/confirm/{gainedStepId}")
     public ResponseEntity endStep(@PathVariable String gainedStepId) {
         if(gainedStepService.endStep(gainedStepId)){
@@ -52,6 +53,7 @@ public class StepController {
 
     }
 
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping("/api/gained_step/add_comment/{gainedStepId}")
     public ResponseEntity addComment(@PathVariable String gainedStepId, @RequestParam String comment) {
         if(gainedStepService.addComment(gainedStepId,comment)){
@@ -63,11 +65,13 @@ public class StepController {
 
     }
 
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping("/api/gained_step/add_file/{gainedStepId}")
     public ResponseEntity addFileToGained(@RequestParam MultipartFile file,@PathVariable String gainedStepId) {
         return new ResponseEntity(gainedStepService.addFile(file,gainedStepId),HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping("/api/step/add_file/{stepId}")
     public ResponseEntity addFile(@RequestParam MultipartFile file,@PathVariable String stepId) {
         return new ResponseEntity(certificateStepService.addFile(file,stepId),HttpStatus.OK);

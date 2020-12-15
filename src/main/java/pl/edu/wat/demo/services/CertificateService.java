@@ -1,7 +1,7 @@
 package pl.edu.wat.demo.services;
 
-import pl.edu.wat.demo.dtos.CertificateRequest;
-import pl.edu.wat.demo.dtos.CertificateResponse;
+import pl.edu.wat.demo.dtos.request.CertificateRequest;
+import pl.edu.wat.demo.dtos.response.CertificateResponse;
 
 import java.util.List;
 

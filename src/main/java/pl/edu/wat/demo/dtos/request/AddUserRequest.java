@@ -1,4 +1,4 @@
-package pl.edu.wat.demo.dtos;
+package pl.edu.wat.demo.dtos.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import javax.validation.constraints.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignupRequest {
+public class AddUserRequest {
     @Size(min = 3, max = 20)
     private String username;
     @Size(max = 50)

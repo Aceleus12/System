@@ -4,23 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import pl.edu.wat.demo.dtos.CertificateRequest;
-import pl.edu.wat.demo.dtos.CertificateResponse;
-import pl.edu.wat.demo.dtos.StepRequest;
-import pl.edu.wat.demo.dtos.StepResponse;
-import pl.edu.wat.demo.entities.CertificateEntity;
 import pl.edu.wat.demo.entities.FileEntity;
-import pl.edu.wat.demo.entities.StepEntity;
-import pl.edu.wat.demo.repositories.CertificateRepository;
-import pl.edu.wat.demo.repositories.CertificateStepRepository;
 import pl.edu.wat.demo.repositories.FileRepository;
-import pl.edu.wat.demo.repositories.GainedCertificateRepository;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class FileServiceImpl implements FileService {

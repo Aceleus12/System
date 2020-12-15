@@ -1,4 +1,4 @@
-package pl.edu.wat.demo.dtos;
+package pl.edu.wat.demo.dtos.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -3,17 +3,14 @@ package pl.edu.wat.demo.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pl.edu.wat.demo.dtos.GainedStepResponse;
-import pl.edu.wat.demo.dtos.StepResponse;
+import pl.edu.wat.demo.dtos.response.GainedStepResponse;
 import pl.edu.wat.demo.entities.GainedCertificateEntity;
 import pl.edu.wat.demo.entities.GainedStepEntity;
-import pl.edu.wat.demo.entities.StepEntity;
 import pl.edu.wat.demo.entities.UserEntity;
 import pl.edu.wat.demo.repositories.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 

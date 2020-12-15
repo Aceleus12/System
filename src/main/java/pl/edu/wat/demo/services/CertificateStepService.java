@@ -1,7 +1,7 @@
 package pl.edu.wat.demo.services;
 
 import org.springframework.web.multipart.MultipartFile;
-import pl.edu.wat.demo.dtos.StepResponse;
+import pl.edu.wat.demo.dtos.response.StepResponse;
 
 import java.util.List;
 
