@@ -49,14 +49,14 @@ public class GainedCertificatesController {
 
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping("/api/gained_certificates/add_file/{id}")
-    public ResponseEntity addFile(@RequestParam MultipartFile file, @PathVariable String stepId) {
-        return new ResponseEntity(gainedCertificateService.addFile(file,stepId),HttpStatus.OK);
+    public ResponseEntity addFile(@RequestParam MultipartFile file, @PathVariable String id) {
+        return new ResponseEntity(gainedCertificateService.addFile(file,id),HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping("/api/gained_certificates/confirm_collecting/{id}")
-    public ResponseEntity confirmCollecting(@PathVariable String stepId) {
-        GainedCertificateResponse gainedCertificateResponse = gainedCertificateService.confirmCollecting(stepId);
+    public ResponseEntity confirmCollecting(@PathVariable String id) {
+        GainedCertificateResponse gainedCertificateResponse = gainedCertificateService.confirmCollecting(id);
         if(gainedCertificateResponse == null){
             return new ResponseEntity(null,HttpStatus.FORBIDDEN);
         }

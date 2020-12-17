@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.edu.wat.demo.dtos.request.StartGainingCertificateRequest;
 import pl.edu.wat.demo.dtos.response.GainedCertificateResponse;
+import pl.edu.wat.demo.dtos.response.GainedStepResponse;
 import pl.edu.wat.demo.entities.CertificateEntity;
+import pl.edu.wat.demo.entities.GainedStepEntity;
 import pl.edu.wat.demo.entities.StepEntity;
 import pl.edu.wat.demo.entities.GainedCertificateEntity;
 import pl.edu.wat.demo.repositories.CertificateRepository;
@@ -27,14 +29,16 @@ public class GainedCertificateServiceImpl implements GainedCertificateService {
     private final CertificateRepository certificateRepository;
     private final GainedStepRepository gainedStepRepository;
     private final GainedStepService gainedStepService;
+    private final FileService fileService;
 
     @Autowired
-    public GainedCertificateServiceImpl(GainedCertificateRepository gainedCertificateRepository, UserRepository userRepository, CertificateRepository certificateRepository, GainedStepService gainedStepService, GainedStepRepository gainedStepRepository) {
+    public GainedCertificateServiceImpl(GainedCertificateRepository gainedCertificateRepository, UserRepository userRepository, CertificateRepository certificateRepository, GainedStepService gainedStepService, GainedStepRepository gainedStepRepository, FileService fileService) {
         this.gainedCertificateRepository = gainedCertificateRepository;
         this.userRepository = userRepository;
         this.certificateRepository = certificateRepository;
         this.gainedStepService = gainedStepService;
         this.gainedStepRepository = gainedStepRepository;
+        this.fileService = fileService;
     }
 
     @Override
@@ -147,7 +151,23 @@ public class GainedCertificateServiceImpl implements GainedCertificateService {
     }
 
     @Override
-    public GainedCertificateResponse addFile(MultipartFile file, String stepId) {
+    public GainedCertificateResponse addFile(MultipartFile file, String id) {
+        if(gainedCertificateRepository.findById(id).isPresent()){
+            GainedCertificateEntity gainedCertificateEntity = gainedCertificateRepository.findById(id).get();
+            gainedCertificateEntity.setFileEntity(fileService.storeFile(file));
+            gainedCertificateRepository.save(gainedCertificateEntity);
+            return new GainedCertificateResponse(
+                    gainedCertificateEntity.getId(),
+                    Optional.ofNullable(gainedCertificateEntity.getCollectDate()),
+                    Optional.ofNullable(gainedCertificateEntity.getGainDate()),
+                    java.util.Optional.ofNullable((gainedCertificateEntity.getFileEntity()!=null)?gainedCertificateEntity.getFileEntity().getId():null),
+                    gainedCertificateEntity.isGained(),
+                    gainedCertificateEntity.isCollected(),
+                    gainedCertificateEntity.getUser().getId(),
+                    gainedCertificateEntity.getCertificate().getId(),
+                    gainedCertificateEntity.getCertificate().getName()
+            );
+        }
         return null;
     }
 

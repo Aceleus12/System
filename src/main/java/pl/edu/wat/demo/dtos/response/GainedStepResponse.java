@@ -18,7 +18,8 @@ public class GainedStepResponse {
     private String stepDescription;
     private Date startDate;
     private Optional<Date> stopDate;
-    private Optional<String> fileId;
+    private Optional<String> originalFileId;
+    private Optional<String> userFileId;
     private String userId;
     private String certificateStepId;
 }

@@ -21,6 +21,6 @@ public interface GainedCertificateService {
 
     GainedCertificateResponse addFile(MultipartFile file, String stepId);
 
-    GainedCertificateResponse confirmCollecting(String stepId);
+    GainedCertificateResponse confirmCollecting(String id);
 
 }

@@ -59,6 +59,7 @@ public class GainedStepServiceImpl implements GainedStepService {
                         stepProceedEntity.getStartDate(),
                         java.util.Optional.ofNullable(stepProceedEntity.getStopDate()),
                         java.util.Optional.ofNullable((stepProceedEntity.getFileEntity()!=null)?stepProceedEntity.getFileEntity().getId():null),
+                        java.util.Optional.ofNullable((stepProceedEntity.getCertificateStep().getFileEntity()!=null)?stepProceedEntity.getCertificateStep().getId():null),
                         stepProceedEntity.getUser().getId(),
                         stepProceedEntity.getCertificateStep().getId()
                 )).collect(Collectors.toList());
@@ -124,6 +125,7 @@ public class GainedStepServiceImpl implements GainedStepService {
                     gainedStepEntity.getStartDate(),
                     java.util.Optional.ofNullable(gainedStepEntity.getStopDate()),
                     java.util.Optional.ofNullable((gainedStepEntity.getFileEntity()!=null)?gainedStepEntity.getFileEntity().getId():null),
+                    java.util.Optional.ofNullable((gainedStepEntity.getCertificateStep().getFileEntity()!=null)?gainedStepEntity.getCertificateStep().getId():null),
                     gainedStepEntity.getUser().getId(),
                     gainedStepEntity.getCertificateStep().getId()
                 )).collect(Collectors.toList());
@@ -144,6 +146,7 @@ public class GainedStepServiceImpl implements GainedStepService {
                             gainedStepEntity.getStartDate(),
                             java.util.Optional.ofNullable(gainedStepEntity.getStopDate()),
                             java.util.Optional.ofNullable((gainedStepEntity.getFileEntity()!=null)?gainedStepEntity.getFileEntity().getId():null),
+                            java.util.Optional.ofNullable((gainedStepEntity.getCertificateStep().getFileEntity()!=null)?gainedStepEntity.getCertificateStep().getId():null),
                             gainedStepEntity.getUser().getId(),
                             gainedStepEntity.getCertificateStep().getId()
                     )).collect(Collectors.toList());
@@ -173,6 +176,7 @@ public class GainedStepServiceImpl implements GainedStepService {
                     stepEntity.getStartDate(),
                     java.util.Optional.ofNullable(stepEntity.getStopDate()),
                     java.util.Optional.ofNullable((stepEntity.getFileEntity()!=null)?stepEntity.getFileEntity().getId():null),
+                    java.util.Optional.ofNullable((stepEntity.getCertificateStep().getFileEntity()!=null)?stepEntity.getCertificateStep().getId():null),
                     stepEntity.getUser().getId(),
                     stepEntity.getCertificateStep().getId()
                     );
@@ -195,6 +199,7 @@ public class GainedStepServiceImpl implements GainedStepService {
                             gainedStepEntity.getStartDate(),
                             java.util.Optional.ofNullable(gainedStepEntity.getStopDate()),
                             java.util.Optional.ofNullable((gainedStepEntity.getFileEntity()!=null)?gainedStepEntity.getFileEntity().getId():null),
+                            java.util.Optional.ofNullable((gainedStepEntity.getCertificateStep().getFileEntity()!=null)?gainedStepEntity.getCertificateStep().getId():null),
                             gainedStepEntity.getUser().getId(),
                             gainedStepEntity.getCertificateStep().getId()
                     )).collect(Collectors.toList());
