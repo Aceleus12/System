@@ -260,8 +260,7 @@
 <ng-template #template>
   <div class="modal-header text-center">
     <div class="text-center w-100"> 
-      <p>Użytkownik numer</p>
-      <p style="font-weight: bold;">{{userForModal.id}}</p>
+      <p style="font-weight: bold;">Użytkownik</p>
     </div>
   </div>
   <div
@@ -272,7 +271,7 @@
     <p>Imię ojca: {{userForModal.fatherName}}</p>
     <p>Numer pesel: {{userForModal.pesel}}</p>
     <p>Adres e-mail: {{userForModal.email}}</p>
-    <button class="btn btn-primary w-100" style="margin-top: 10px;" [routerLink]="['/user/', userForModal.id]" (click)="modalRef.hide()" >Szczegóły</button>
+    <button class="btn btn-primary w-100" style="margin-top: 10px;" [routerLink]="['/user/', userForModal.id]" (click)="modalRef.hide()" >Certyfikaty</button>
     <button class="btn btn-danger w-100" style="margin-top: 10px;" (click)="deleteUser()">Usuń użytkownika</button>
   </div>
 

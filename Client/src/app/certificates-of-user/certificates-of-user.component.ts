@@ -20,7 +20,7 @@ export class CertificatesOfUserComponent implements OnInit {
   myUserId: string;
   gainedId: any;
   step: any;
-  file: any;
+  file: any = null;
   modalRef: BsModalRef;
   selectedCertificate: any;
   selectedGainedCertificate: any;
@@ -54,9 +54,13 @@ export class CertificatesOfUserComponent implements OnInit {
         if (data.length > 0) {
           this.getDetailsOfCertificate(certID);
           this.step = data[0];
+          debugger;
           this.modalRef = this.modalService.show(template, {
             class: 'modal-lg',
           });
+          this.modalRef.onHide.subscribe((next) => {
+            this.file = null;
+          })
         }
       },
       (error) => {
@@ -78,6 +82,7 @@ export class CertificatesOfUserComponent implements OnInit {
   }
 
   addFile(id: string) {
+    debugger;
     const formData = new FormData();
     formData.append('file', this.file);
     this.stepService.addFileFromUser(id, formData).subscribe(
@@ -98,6 +103,7 @@ export class CertificatesOfUserComponent implements OnInit {
   }
 
   downloadFile(id: string) {
+    debugger;
     this.stepService.downloadFile(id);
   }
 

@@ -31,7 +31,7 @@ export class UserDetailsComponent implements OnInit {
   unconfirmedCertificates = [];
   confirmedCertificates = [];
   modalRef: BsModalRef;
-  step: StepToReturn;
+  step: any;
   file: any;
   comment = '';
   idk: any;
@@ -52,6 +52,7 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data) => {
       this.user = data['user'];
+      debugger;
       this.getAllCertificates();
       this.getConfirmedCertificates();
       this.getUnconfirmedCertificates();
@@ -116,6 +117,7 @@ export class UserDetailsComponent implements OnInit {
       (data) => {
         if (data.length > 0) {
           this.step = data[0];
+          debugger;
           this.modalRef = this.modalService.show(template, {
             class: 'modal-lg',
           });

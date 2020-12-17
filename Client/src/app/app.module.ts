@@ -15,6 +15,8 @@ import { LoginComponent } from './login/login.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { CertificatesOfUserComponent } from './certificates-of-user/certificates-of-user.component';
+import { AdminGuard } from './_guards/admin.guard';
+import { UserGuard } from './_guards/user.guard';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -43,7 +45,7 @@ export function tokenGetter() {
       },
     }),
   ],
-  providers: [ErrorInterceptorProvider, UserDetailResolver],
+  providers: [ErrorInterceptorProvider, UserDetailResolver, AdminGuard, UserGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

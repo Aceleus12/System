@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertifyService } from '../_services/alertify.service';
 import { AuthService } from '../_services/auth.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { AuthService } from '../_services/auth.service';
 })
 export class LoginComponent implements OnInit {
   model: any = {};
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private alertify: AlertifyService) {}
 
   ngOnInit() {}
 
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
         console.log('success');
       },
       (error) => {
-        console.log(error);
+        this.alertify.error("Zła nazwa użytkownika lub hasło.");
       }
     );
   }

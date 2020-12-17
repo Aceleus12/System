@@ -48,7 +48,6 @@ export class CertificatesComponent implements OnInit {
   constructor(
     private certificateService: CertificateService,
     private fb: FormBuilder,
-    private modalService: BsModalService
     private modalService: BsModalService,
     private stepService: StepService,
     private authService: AuthService,

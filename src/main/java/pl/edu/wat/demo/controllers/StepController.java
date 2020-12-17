@@ -66,7 +66,7 @@ public class StepController {
     }
 
 
-    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping("/api/gained_step/add_file/{gainedStepId}")
     public ResponseEntity addFileToGained(@RequestParam MultipartFile file,@PathVariable String gainedStepId) {
         return new ResponseEntity(gainedStepService.addFile(file,gainedStepId),HttpStatus.OK);

@@ -5,64 +5,58 @@
   >
     <div class="my-3 py-3">
       <h2 class="display-5" style="margin-bottom: 40px">
-        Rozpoczęte aplikacje
+        Moje aplikacje
       </h2>
       <div style="max-height: calc(100vh - 400px); overflow-y: auto">
         <table>
           <tr>
             <th>Nazwa</th>
-            <th>GainedID</th>
             <th>Status</th>
             <th>Odebrano</th>
           </tr>
           <tr *ngFor="let cert of certificates">
             <td
+              *ngIf="cert.collected"
+              (click)="openFinished(cert.id, certificateConfirm)"
+            >
+              {{ cert.certificateName }}
+            </td>
+            <td
+              *ngIf="!cert.collected"
               (click)="
                 getUnconfirmed(cert.id, cert.certificateID, stepManagement)
               "
             >
               {{ cert.certificateName }}
             </td>
-            <td>{{ cert.id }}</td>
-            <td>
-              <p
-                *ngIf="cert.collected"
-                style="color: green"
-                (click)="openFinished(cert.id, certificateConfirm)"
-              >
-                Uzyskano.
-              </p>
-              <p
-                *ngIf="!cert.collected"
-                style="color: orange"
-                (click)="
-                  getUnconfirmed(cert.id, cert.certificateID, stepManagement)
-                "
-              >
-                W trakcie.
-              </p>
+            <td
+              (click)="openFinished(cert.id, certificateConfirm)"
+              *ngIf="cert.collected"
+            >
+              <p style="color: green">Uzyskano.</p>
             </td>
             <td
+              *ngIf="!cert.collected"
               (click)="
                 getUnconfirmed(cert.id, cert.certificateID, stepManagement)
               "
             >
-              <p
-                *ngIf="cert.gained"
-                style="color: green"
-                (click)="openFinished(cert.id, certificateConfirm)"
-              >
-                Odebrano.
-              </p>
-              <p
-                *ngIf="!cert.gained"
-                style="color: orange"
-                (click)="
-                  getUnconfirmed(cert.id, cert.certificateID, stepManagement)
-                "
-              >
-                Nie odebrano.
-              </p>
+              <p style="color: orange">W trakcie.</p>
+            </td>
+
+            <td
+              *ngIf="!cert.gained"
+              (click)="
+                getUnconfirmed(cert.id, cert.certificateID, stepManagement)
+              "
+            >
+              <p style="color: orange">Nie odebrano.</p>
+            </td>
+            <td
+              *ngIf="cert.gained"
+              (click)="openFinished(cert.id, certificateConfirm)"
+            >
+              <p style="color: green">Odebrano.</p>
             </td>
           </tr>
         </table>
@@ -75,27 +69,36 @@
 <ng-template #stepManagement style="width: 900px; box-sizing: content-box">
   <div class="modal-header text-center">
     <div class="text-center w-100">
-      <p>{{ step.id }}</p>
-      <p style="font-weight: bold">{{ step.certificateStepId }}</p>
+      <p style="font-weight: bold; margin: auto;">Obecny etap</p>
     </div>
   </div>
   <div class="modal-body">
     <p>Rozpoczęto {{ step.startDate | date: "mediumDate" }}</p>
     <p>Etap: {{ step.stepName }}</p>
-    <p>{{ step.stepDescription }}</p>
-    <p>Komentarz: {{ step.comment }}</p>
-    <div class="input-group mb-3 w-100">
+    <p>Opis etapu: {{ step.stepDescription }}</p>
+    <p *ngIf="step.comment">Komentarz nadzorującego: {{ step.comment }}</p>
+    <p *ngIf="!step.comment">Komentarz nadzorującego: brak komentarza.</p>
+    <button
+      class="btn btn-success mb-3"
+      (click)="downloadFile(step.originalFileId)"
+      [disabled]="!step.originalFileId"
+    >
+      Pobierz załącznik
+    </button>
+    <div class="w-100" style="display: inline-block;">
       <input
         #fileInput
         type="file"
+        style="float: left;"
         placeholder="Dołącz plik..."
         (change)="onFileSelect($event)"
       />
       <button
-        class="input-group-text btn btn-success"
+      style="float: right;"
+        class="btn btn-success"
         id="searchCertificates"
         (click)="addFile(step.id)"
-        [disabled]="!file"
+        [disabled]="file == null"
       >
         Załącz
       </button>
@@ -111,8 +114,7 @@
 <ng-template #template>
   <div class="modal-header text-center">
     <div class="text-center w-100">
-      <p>Certyfikat numer</p>
-      <p style="font-weight: bold">{{ selectedCertificate.id }}</p>
+      <p style="font-weight: bold">Certyfikat: {{ selectedCertificate.name }}</p>
     </div>
   </div>
   <div class="modal-body">
@@ -147,9 +149,9 @@
 
 <ng-template #certificateConfirm>
   <div class="modal-header text-center">
-    <p style="font-weight: bold">Dodaj plik z certyfikatem dla użytkownika</p>
+    <p style="font-weight: bold; margin: auto">Certyfikat</p>
   </div>
   <div class="modal-body">
-    <p>Zakończono {{ selectedGainedCertificate.gainDate | date: "medium" }}</p>
+    <p>Zakończono: {{ selectedGainedCertificate.gainDate | date: "medium" }}</p>
   </div>
 </ng-template>

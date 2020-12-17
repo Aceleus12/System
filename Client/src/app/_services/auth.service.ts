@@ -36,8 +36,10 @@ export class AuthService {
           this.isAdmin = this.roles.some((e) => e === 'ROLE_ADMIN');
           if (this.isAdmin) {
             localStorage.setItem('role', 'admin');
+            this.router.navigate(['/users']);
           } else {
             localStorage.setItem('role', 'user');
+            this.router.navigate(['/my_certs']);
           }
         }
       })
@@ -46,6 +48,8 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('userId');
     this.decodedToken = null;
     this.roles = [];
     this.userId = '';
@@ -63,10 +67,9 @@ export class AuthService {
   }
 
   isAdminLogged() {
-    if (localStorage.getItem('role')==='admin') {
+    if (localStorage.getItem('role') === 'admin') {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }

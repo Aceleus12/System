@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlertifyService } from './_services/alertify.service';
 import { AuthService } from './_services/auth.service';
 
 @Component({
@@ -8,5 +9,14 @@ import { AuthService } from './_services/auth.service';
 })
 export class AppComponent {
   title = 'Client';
-  constructor(public authService: AuthService) {}
+  constructor(
+    public authService: AuthService,
+    private alertify: AlertifyService
+  ) {}
+
+  logout() {
+    this.alertify.confirm('Czy na pewno chcesz się wylogować?', () => {
+      this.authService.logout();
+    });
+  }
 }

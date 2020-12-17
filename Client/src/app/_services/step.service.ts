@@ -73,4 +73,4 @@ export class StepService {
     debugger;
     return this.http.put(this.baseUrl + 'gained_certificates/confirm_collecting/' + gainedID, {});
   }
-
+}
