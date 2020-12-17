@@ -63,6 +63,10 @@ public class StepController {
 
     }
 
+<<<<<<< Updated upstream
+=======
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+>>>>>>> Stashed changes
     @PutMapping("/api/gained_step/add_file/{gainedStepId}")
     public ResponseEntity addFileToGained(@RequestParam MultipartFile file,@PathVariable String gainedStepId) {
         return new ResponseEntity(gainedStepService.addFile(file,gainedStepId),HttpStatus.OK);

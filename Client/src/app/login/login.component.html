@@ -1,0 +1,41 @@
+<div class="w-100 text-center" style="padding-inline: 40%; padding-top: 5%">
+  <div class="card p-5">
+    <form
+      id="form-login"
+      #loginForm="ngForm"
+      class="form-signin"
+      (ngSubmit)="login()"
+    >
+      <h1 id="login-header">Witaj</h1>
+
+      <input
+        type="text"
+        [(ngModel)]="model.username"
+        id="inputUsername"
+        class="form-control mb-3"
+        name="username"
+        placeholder="Nazwa użytkownika"
+        required
+        autofocus=""
+      />
+
+      <input
+        class="form-control mb-3"
+        [(ngModel)]="model.password"
+        type="password"
+        id="inputPassword"
+        name="password"
+        placeholder="Hasło"
+        required
+      />
+
+      <button
+        class="btn btn-success btn-block"
+        [disabled]="!loginForm.valid"
+        type="submit"
+      >
+        Zaloguj
+      </button>
+    </form>
+  </div>
+</div>

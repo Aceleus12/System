@@ -12,7 +12,6 @@
         <table>
           <tr>
             <th>Nazwa</th>
-            <th>GainedID</th>
             <th>Status</th>
             <th>Odebrano</th>
           </tr>
@@ -20,20 +19,19 @@
             <td (click)="getUnconfirmed(cert.id, stepManagement)">
               {{ cert.certificateName }}
             </td>
-            <td>{{cert.id}}</td>
-            <td (click)="getUnconfirmed(cert.id, stepManagement)">
-              <p *ngIf="cert.collected" style="color: green">Uzyskano.</p>
-              <p *ngIf="!cert.collected" style="color: orange">W trakcie.</p>
+            <td >
+              <p *ngIf="cert.collected" style="color: green" (click)="openAddCertFile(cert.id, certificateFile)" >Uzyskano.</p>
+              <p *ngIf="!cert.collected" style="color: orange" (click)="getUnconfirmed(cert.id, stepManagement)" >W trakcie.</p>
             </td>
             <td (click)="getUnconfirmed(cert.id, stepManagement)">
-              <p *ngIf="cert.gained" style="color: green">Odebrano.</p>
-              <p *ngIf="!cert.gained" style="color: orange">Nie odebrano.</p>
+              <p *ngIf="cert.gained" style="color: green" (click)="openAddCertFile(cert.id, certificateFile)" >Odebrano.</p>
+              <p *ngIf="!cert.gained" style="color: orange" (click)="getUnconfirmed(cert.id, stepManagement)" >Nie odebrano.</p>
             </td>
           </tr>
         </table>
       </div>
     </div>
-    <button
+    <button 
       class="btn btn-success w-100 mb-3"
       (click)="openStartProcedure(procedure)"
     >
@@ -69,17 +67,53 @@
     <p>Rozpoczęto {{ step.startDate | date: "mediumDate" }}</p>
     <p>Nazwa i opis kroku</p>
     <p>Komentarz: {{ step.comment }}</p>
-    <button *ngIf="step.fileId!=null" class="btn btn-success mb-3" (click)="downloadFile(step.fileId)">Pobierz załącznik</button>
+    <button class="btn btn-success mb-3" (click)="downloadFile(step.fileId)" [disabled]="step.fileId==null">Pobierz załącznik</button>
     <div class="input-group mb-3">     
       <input type="text" [(ngModel)]="comment" class="form-control" placeholder="Komentarz..." aria-label="Username"  aria-describedby="basic-addon1">
       <button class="input-group-text btn btn-success" id="searchCertificates" (click)="addComment(step.id)" [disabled]='comment.length==0'>Skomentuj</button>
     </div>
+<<<<<<< Updated upstream
     <div class="input-group mb-3 w-100">     
       <input #fileInput type="file" placeholder="Komentarz..." (change)="onFileSelect($event)" >
       <button class="input-group-text btn btn-success" id="searchCertificates" (click)="addFile(step.id)" [disabled]='!file' >Załącz</button>
     </div>
+=======
+
+>>>>>>> Stashed changes
+  </div>
+  <div  class="modal-footer">
+    <button class="btn btn-primary w-100" (click)="confirmStep(step.id)" >Zatwierdź</button>
+  </div>
+</ng-template>
+
+
+<ng-template #certificateFile >
+  <div class="modal-header text-center">
+    <p style="font-weight: bold; margin: auto;">Podgląd</p>
+  </div>
+  <div class="modal-body">
+    <p>Zakończono: {{ selectedCertificate.gainDate | date: "medium" }}</p>
+    <p *ngIf="selectedCertificate.collectDate">Odebrano: {{ selectedCertificate.collectDate | date: "medium"}}</p>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary w-100" (click)="confirmStep(step.id)" >Zatwierdź</button>
+    <div class="w-100" style="display: inline-block; width: 100%">     
+      <input #fileInput type="file" placeholder="Załącznik..." (change)="onFileSelect($event)" style="float: left; margin-right: auto;">
+      <button class="btn btn-success" id="attach" style="float: right; margin: auto;" (click)="addFile()" [disabled]='!file'>Załącz</button>
+    </div>
+    <button
+      class="btn btn-success w-100 mb-3"
+      id="attach"
+      (click)="downloadFile(selectedCertificate.fileId)"
+      [disabled]="!selectedCertificate.fileId"
+    >
+      Pobierz certyfikat
+    </button>
+    <button
+      class="btn btn-primary w-100"
+      [disabled]="selectedCertificate.collected"
+      (click)="confirmCollecting(selectedCertificate.id)"
+    >
+      Potwierdź odebranie
+    </button>
   </div>
 </ng-template>

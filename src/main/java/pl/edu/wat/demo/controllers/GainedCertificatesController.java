@@ -49,8 +49,18 @@ public class GainedCertificatesController {
     }
 
     @PutMapping("/api/gained_certificates/confirm_collecting/{id}")
+<<<<<<< Updated upstream
     public ResponseEntity addFile(@PathVariable String stepId) {
         return new ResponseEntity(gainedCertificateService.confirmCollecting(stepId),HttpStatus.OK);
+=======
+    public ResponseEntity confirmCollecting(@PathVariable String id) {
+        GainedCertificateResponse gainedCertificateResponse = gainedCertificateService.confirmCollecting(id);
+        if(gainedCertificateResponse == null){
+            return new ResponseEntity(null,HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity(gainedCertificateResponse,HttpStatus.OK);
+
+>>>>>>> Stashed changes
     }
 
     @GetMapping("/api/gained_certificates/confirmed/{gainedCertificateID}/{userId}")

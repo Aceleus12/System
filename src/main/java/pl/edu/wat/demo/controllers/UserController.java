@@ -26,6 +26,23 @@ public class UserController {
         this.gainedStepService = gainedStepService;
     }
 
+<<<<<<< Updated upstream
+=======
+    @PostMapping("/api/user/sign_in")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        JwtResponse jwtResponse = userService.signIn(loginRequest);
+        return ResponseEntity.ok(jwtResponse);
+    }
+
+
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PostMapping("/api/user/add_user")
+    public ResponseEntity addNew(@RequestBody AddUserRequest userRequest) {
+        return ResponseEntity.ok(userService.addNew(userRequest));
+    }
+
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+>>>>>>> Stashed changes
     @GetMapping("/api/user/all")
     public ResponseEntity<List<UserResponse>> getAll() {
         return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
@@ -54,6 +71,10 @@ public class UserController {
         return new ResponseEntity<>(userService.get(id), HttpStatus.OK);
     }
 
+<<<<<<< Updated upstream
+=======
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+>>>>>>> Stashed changes
     @GetMapping("/api/user/certificates/{userId}")
     public ResponseEntity<GainedCertificateResponse> getGainedCertificate(@PathVariable String userId) {
         return new ResponseEntity(gainedCertificateService.getUserCertificates(userId), HttpStatus.OK);

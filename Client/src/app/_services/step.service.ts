@@ -19,7 +19,8 @@ export class StepService {
     });
   }
 
-  addFile(stepId: string, file: FormData) {
+  addFileFromUser(stepId: string, file: FormData) {
+    debugger;
     return this.http.put(this.baseUrl + 'gained_step/add_file/' + stepId, file);
   }
 
@@ -38,4 +39,40 @@ export class StepService {
   confirmStep(stepId: string) {
     return this.http.post(this.baseUrl + 'step/confirm/' + stepId, {});
   }
+<<<<<<< Updated upstream
+=======
+
+  downloadFile(id: string) {
+    window.open('http://localhost:8080/api/file/' + id);
+  }
+
+  addFileFromAdmin(stepId: string, file: FormData) {
+    return this.http.put(this.baseUrl + 'step/add_file/' + stepId, file);
+  }
+
+  addFileForGainedCertificate(gainedCertId: string, file: FormData) {
+    debugger;
+    return this.http.put(
+      this.baseUrl + 'gained_certificates/add_file/' + gainedCertId,
+      file
+    );
+  }
+
+  getGainedCertificateForUser(id: string): Observable<any> {
+    return this.http
+      .get<any>(this.baseUrl + 'gained_certificates/' + id, {
+        observe: 'response',
+      })
+      .pipe(
+        map((response) => {
+          return response.body;
+        })
+      );
+  }
+
+  confirmCollecting(gainedID: string) {
+    debugger;
+    return this.http.put(this.baseUrl + 'gained_certificates/confirm_collecting/' + gainedID, {});
+  }
+>>>>>>> Stashed changes
 }

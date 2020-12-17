@@ -32,6 +32,10 @@ public class FileController {
         return new ResponseEntity(fileService.storeFile(file), HttpStatus.OK);
     }
 
+<<<<<<< Updated upstream
+=======
+    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+>>>>>>> Stashed changes
     @GetMapping("/api/file/{fileId}")
     public ResponseEntity downloadFile(@PathVariable String fileId) {
         // Load file from database

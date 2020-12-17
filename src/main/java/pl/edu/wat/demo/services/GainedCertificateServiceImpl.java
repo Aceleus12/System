@@ -161,7 +161,7 @@ public class GainedCertificateServiceImpl implements GainedCertificateService {
                     gainedCertificateEntity.getId(),
                     Optional.ofNullable(gainedCertificateEntity.getCollectDate()),
                     Optional.ofNullable(gainedCertificateEntity.getGainDate()),
-                    java.util.Optional.ofNullable((gainedCertificateEntity.getFileEntity()!=null)?gainedCertificateEntity.getFileEntity().getId():null),
+                    Optional.ofNullable((gainedCertificateEntity.getFileEntity()!=null)?gainedCertificateEntity.getFileEntity().getId():null),
                     gainedCertificateEntity.isCollected(),
                     gainedCertificateEntity.isGained(),
                     gainedCertificateEntity.getUser().getId(),
