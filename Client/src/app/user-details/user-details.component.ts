@@ -140,7 +140,8 @@ export class UserDetailsComponent implements OnInit {
   }
 
   downloadFile(id: string) {
-    window.open('http://localhost:8080/api/file/' + id);
+    // this will be for user only (for attaching scans/pics or other)
+    this.stepService.downloadFile(id);
   }
 
   confirmStep(id: string) {

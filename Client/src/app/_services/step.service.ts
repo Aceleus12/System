@@ -39,8 +39,6 @@ export class StepService {
   confirmStep(stepId: string) {
     return this.http.post(this.baseUrl + 'step/confirm/' + stepId, {});
   }
-<<<<<<< Updated upstream
-=======
 
   downloadFile(id: string) {
     window.open('http://localhost:8080/api/file/' + id);
@@ -49,6 +47,7 @@ export class StepService {
   addFileFromAdmin(stepId: string, file: FormData) {
     return this.http.put(this.baseUrl + 'step/add_file/' + stepId, file);
   }
+
 
   addFileForGainedCertificate(gainedCertId: string, file: FormData) {
     debugger;
@@ -74,5 +73,4 @@ export class StepService {
     debugger;
     return this.http.put(this.baseUrl + 'gained_certificates/confirm_collecting/' + gainedID, {});
   }
->>>>>>> Stashed changes
-}
+

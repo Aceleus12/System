@@ -16,6 +16,7 @@ import { StepToAdd } from '../_models/stepToAdd';
 import { AlertifyService } from '../_services/alertify.service';
 import { AuthService } from '../_services/auth.service';
 import { CertificateService } from '../_services/certificate.service';
+import { StepService } from '../_services/step.service';
 
 @Component({
   selector: 'app-certificates',
@@ -34,6 +35,8 @@ export class CertificatesComponent implements OnInit {
 
   addCertificateForm: FormGroup;
   modalRef: BsModalRef;
+  files = [];
+  file: any;
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
@@ -45,14 +48,12 @@ export class CertificatesComponent implements OnInit {
   constructor(
     private certificateService: CertificateService,
     private fb: FormBuilder,
-<<<<<<< Updated upstream
     private modalService: BsModalService
-=======
     private modalService: BsModalService,
     private stepService: StepService,
     private authService: AuthService,
     private alertifyService: AlertifyService
->>>>>>> Stashed changes
+
   ) {}
 
   ngOnInit() {
@@ -82,11 +83,10 @@ export class CertificatesComponent implements OnInit {
   }
 
   addCertificate() {
-    debugger;
     this.certificate = {
       name: this.addCertificateForm.get('name').value,
       certificateSteps: this.steps,
-      description: this.addCertificateForm.get('certDescription').value
+      description: this.addCertificateForm.get('certDescription').value,
     };
 
     this.certificateService.addCertificate(this.certificate).subscribe(
@@ -119,31 +119,14 @@ export class CertificatesComponent implements OnInit {
 
   openCertificateDetails(cert: Certificate, template: TemplateRef<any>) {
     this.certificateForModal = cert;
-<<<<<<< Updated upstream
-    this.modalRef = this.modalService.show(template);
-=======
     this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
     this.modalRef.onHide.subscribe(() => {
       this.files = [];
       this.getCertificates();
     });
->>>>>>> Stashed changes
   }
-
   deleteCert() {
-<<<<<<< Updated upstream
-    this.certificateService
-      .deleteCertificate(this.certificateForModal.id)
-      .subscribe(
-        (next) => {
-          this.getCertificates(); 
-          this.modalRef.hide();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-=======
+
     this.alertifyService.confirm('Czy na pewno chcesz usunąć?', () => {
       this.certificateService
         .deleteCertificate(this.certificateForModal.id)
@@ -157,11 +140,10 @@ export class CertificatesComponent implements OnInit {
           }
         );
     });
->>>>>>> Stashed changes
+
   }
 
   onKey(event) {
-    debugger;
     this.keyWord = event.target.value;
     if (this.keyWord.length === 0) {
       this.getCertificates();
@@ -185,9 +167,6 @@ export class CertificatesComponent implements OnInit {
     this.getCertificateId.emit(this.certificateForModal.id);
     this.modalRef.hide();
   }
-<<<<<<< Updated upstream
-=======
-
   downloadFile(id: string) {
     this.stepService.downloadFile(id);
   }
@@ -221,5 +200,4 @@ export class CertificatesComponent implements OnInit {
   containsFile(id: number): boolean {
     return this.files.some((e) => e.id === id);
   }
->>>>>>> Stashed changes
 }
