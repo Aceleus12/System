@@ -61,7 +61,6 @@ public class GainedCertificatesController {
             return new ResponseEntity(null,HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity(gainedCertificateResponse,HttpStatus.OK);
-
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")

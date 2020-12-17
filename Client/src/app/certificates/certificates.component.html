@@ -206,23 +206,26 @@
 <ng-template #template>
   <div class="modal-header text-center">
     <div class="text-center w-100"> 
-      <p>Certyfikat numer</p>
-      <p style="font-weight: bold;">{{certificateForModal.id}}</p>
+      <h5 style="font-weight: bold;">Certyfikat: {{ certificateForModal.name}}</h5>
     </div>
   </div>
   <div
     class="modal-body" 
   >
+    <p>Opis: {{ certificateForModal.description }}</p>
     <p>Liczba kroków: {{certificateForModal.certificateSteps.length}}</p>
     <div *ngFor="let step of certificateForModal.certificateSteps; let i=index">
-      <div>     
-        <p style="float: left;">{{i + 1}}. {{step.name}} ({{step.description}})</p>  
+
+      <p>{{i + 1}}. {{step.name}} ({{step.description}})</p>
+      <div style="display: inline-block; width: 100%;">     
+        <p style="float: left;">{{i + 1}}. {{step.name}}: {{step.description}}</p>  
         <button class="btn btn-success" style="margin: auto; float: right;" id="getAttachment" [disabled]="!step.fileId" (click)="downloadFile(step.fileId)">Pobierz załącznik</button>
       </div>
-      <div class="input-group mb-3 w-100">     
-        <input #fileInput type="file" placeholder="Załącznik..." (change)="onFileSelect($event, i)" style="float: left; margin-right: auto;">
-        <button class="btn btn-success" id="attach" style="margin: auto;" (click)="addFile(step.id, i)" [disabled]='!containsFile(i)'>Załącz</button>
+      <div style="display: inline-block; width: 100%;">     
+        <input #fileInput type="file" placeholder="Załącznik..." (change)="onFileSelect($event, i)" style="float: left;">
+        <button class="btn btn-success" id="attach" style="margin: auto; float: right;" (click)="addFile(step.id, i)" [disabled]='!containsFile(i)'>Załącz</button>
       </div>
+
     </div>
     <button *ngIf="!isEditable" class="btn btn-success w-100" style="margin-top: 10px;" (click)="beginProcedure()">Rozpocznij</button>
     <button *ngIf="isEditable" class="btn btn-danger w-100" style="margin-top: 10px;" (click)="deleteCert()">Usuń certyfikat</button>

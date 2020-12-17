@@ -159,10 +159,10 @@
           </div>
         </div>
         <div class="row">
-          <div class="col">
+          <div class="col mb-3">
             <label for="email">Adres e-mail</label>
             <input
-              type="text"
+              type="email"
               [ngClass]="{
                 'is-invalid':
                 addUserForm.get('email').errors &&
@@ -183,10 +183,69 @@
               "
             >
               Wprowadź adres e-mail.
-            </div>
+            </div>           
           </div>
         </div>
-        <hr class="mb-4" />
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="username">Nazwa użytkownika</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                  addUserForm.get('username').errors &&
+                  addUserForm.get('username').touched
+              }"
+              formControlName="username"
+              class="form-control"
+              id="username"
+              placeholder=""
+              value=""
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                addUserForm.get('username').touched &&
+                addUserForm.get('username').hasError('required')
+              "
+            >
+              Wprowadź nazwę użytkownika.
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="password">Hasło</label>
+            <input
+              type="text"
+              [ngClass]="{
+                'is-invalid':
+                  addUserForm.get('password').errors &&
+                  addUserForm.get('password').touched
+              }"
+              formControlName="password"
+              class="form-control"
+              id="password"
+              placeholder=""
+              value=""
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                addUserForm.get('password').touched &&
+                addUserForm.get('password').hasError('required')
+              "
+            >
+              Wprowadź hasło.
+            </div>
+          </div>         
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="role">
+          <label class="form-check-label" for="exampleCheck1">Administrator/Moderator</label>
+        </div>
+        <hr class="mb-4" />      
         <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!addUserForm.valid">
           Dodaj użytkownika
         </button>

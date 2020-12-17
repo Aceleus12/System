@@ -13,6 +13,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Certificate } from '../_models/certificate';
 import { CertificateToAdd } from '../_models/certificateToAdd';
 import { StepToAdd } from '../_models/stepToAdd';
+import { AlertifyService } from '../_services/alertify.service';
+import { AuthService } from '../_services/auth.service';
 import { CertificateService } from '../_services/certificate.service';
 import { StepService } from '../_services/step.service';
 
@@ -46,8 +48,12 @@ export class CertificatesComponent implements OnInit {
   constructor(
     private certificateService: CertificateService,
     private fb: FormBuilder,
+    private modalService: BsModalService
     private modalService: BsModalService,
-    private stepService: StepService
+    private stepService: StepService,
+    private authService: AuthService,
+    private alertifyService: AlertifyService
+
   ) {}
 
   ngOnInit() {
@@ -116,20 +122,25 @@ export class CertificatesComponent implements OnInit {
     this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
     this.modalRef.onHide.subscribe(() => {
       this.files = [];
+      this.getCertificates();
     });
   }
   deleteCert() {
-    this.certificateService
-      .deleteCertificate(this.certificateForModal.id)
-      .subscribe(
-        (next) => {
-          this.getCertificates();
-          this.modalRef.hide();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+
+    this.alertifyService.confirm('Czy na pewno chcesz usunąć?', () => {
+      this.certificateService
+        .deleteCertificate(this.certificateForModal.id)
+        .subscribe(
+          (next) => {
+            this.getCertificates();
+            this.modalRef.hide();
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    });
+
   }
 
   onKey(event) {
@@ -156,7 +167,6 @@ export class CertificatesComponent implements OnInit {
     this.getCertificateId.emit(this.certificateForModal.id);
     this.modalRef.hide();
   }
-
   downloadFile(id: string) {
     this.stepService.downloadFile(id);
   }
@@ -168,11 +178,11 @@ export class CertificatesComponent implements OnInit {
     formData.append('file', file);
     this.stepService.addFileFromAdmin(id, formData).subscribe(
       (next) => {
-        console.log('success');
+        this.alertifyService.success('Dodano.');
         //this.reloadSteps();
       },
       (error) => {
-        console.log('error');
+        this.alertifyService.error(error);
       }
     );
   }

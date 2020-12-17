@@ -29,7 +29,8 @@ public class FileController {
 //    }
 
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+
+    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/api/file/{fileId}")
     public ResponseEntity downloadFile(@PathVariable String fileId) {
         // Load file from database

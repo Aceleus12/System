@@ -11,13 +11,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserDetailResolver } from './_resolvers/user-detail.resolver';
+import { LoginComponent } from './login/login.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { ErrorInterceptorProvider } from './_services/error.interceptor';
+import { CertificatesOfUserComponent } from './certificates-of-user/certificates-of-user.component';
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
-  declarations: [	
+  declarations: [			
     AppComponent,
       UsersComponent,
       CertificatesComponent,
-      UserDetailsComponent
+      UserDetailsComponent,
+      LoginComponent,
+      CertificatesOfUserComponent
    ],
   imports: [
     BrowserModule,
@@ -25,9 +35,15 @@ import { UserDetailResolver } from './_resolvers/user-detail.resolver';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter,
+        allowedDomains: ['localhost:8080'],
+      },
+    }),
   ],
-  providers: [UserDetailResolver],
+  providers: [ErrorInterceptorProvider, UserDetailResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -42,7 +42,8 @@ public class UserController {
         this.gainedStepService = gainedStepService;
     }
 
-    @PostMapping("/user/sign_in")
+
+    @PostMapping("/api/user/sign_in")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         JwtResponse jwtResponse = userService.signIn(loginRequest);
         return ResponseEntity.ok(jwtResponse);
@@ -50,7 +51,7 @@ public class UserController {
 
 
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
-    @PostMapping("/api/add_user")
+    @PostMapping("/api/user/add_user")
     public ResponseEntity addNew(@RequestBody AddUserRequest userRequest) {
         return ResponseEntity.ok(userService.addNew(userRequest));
     }
@@ -80,7 +81,8 @@ public class UserController {
         return new ResponseEntity<>(userService.get(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/api/user/certificates/{userId}")
     public ResponseEntity<GainedCertificateResponse> getGainedCertificate(@PathVariable String userId) {
         return new ResponseEntity(gainedCertificateService.getUserCertificates(userId), HttpStatus.OK);

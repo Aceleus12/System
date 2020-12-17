@@ -3,6 +3,7 @@ export interface User {
     name: string;
     surname: string;
     pesel: string;
+    role: string[];
     fatherName: string;
     email: string;
 }
