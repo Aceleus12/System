@@ -15,6 +15,9 @@
       <li class="nav-item">
         <a *ngIf="!authService.isAdminLogged()" class="p-2 text-light" [routerLink]="['/my_certs']">Moje certyfikaty</a>
       </li>     
+      <li class="nav-item">
+        <a  class="p-2 text-light" [routerLink]="['/ch_pass']">Zmień hasło</a>
+      </li> 
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <button class="btn btn-secondary" (click)="logout()">Wyloguj</button>

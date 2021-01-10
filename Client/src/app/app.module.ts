@@ -17,19 +17,21 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { CertificatesOfUserComponent } from './certificates-of-user/certificates-of-user.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { UserGuard } from './_guards/user.guard';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
 
 @NgModule({
-  declarations: [			
+  declarations: [				
     AppComponent,
       UsersComponent,
       CertificatesComponent,
       UserDetailsComponent,
       LoginComponent,
-      CertificatesOfUserComponent
+      CertificatesOfUserComponent,
+      ChangePasswordComponent
    ],
   imports: [
     BrowserModule,

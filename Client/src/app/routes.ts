@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { CertificatesOfUserComponent } from './certificates-of-user/certificates-of-user.component';
 import { CertificatesComponent } from './certificates/certificates.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { LoginComponent } from './login/login.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { UsersComponent } from './users/users.component';
@@ -32,6 +33,10 @@ export const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'ch_pass',
+    component: ChangePasswordComponent
   },
   {
     path: 'my_certs',
