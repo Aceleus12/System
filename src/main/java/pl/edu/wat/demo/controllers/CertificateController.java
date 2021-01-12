@@ -51,7 +51,6 @@ public class CertificateController {
         else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")

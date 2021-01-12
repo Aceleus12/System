@@ -128,5 +128,9 @@ export class CertificatesOfUserComponent implements OnInit {
     );
   }
 
+  getIndex(id: string): number {
+    return this.selectedCertificate.certificateSteps.findIndex(x => x.id == id) + 1;
+  }
+
   
 }

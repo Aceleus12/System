@@ -181,8 +181,8 @@ export class UserDetailsComponent implements OnInit {
   openAddCertFile(gainedID: string, template: TemplateRef<any>) {
     this.stepService.getGainedCertificateForUser(gainedID).subscribe(
       (data) => {
-        debugger;
         this.selectedCertificate = data;
+        this
         this.gainedId = gainedID;
         this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
       },

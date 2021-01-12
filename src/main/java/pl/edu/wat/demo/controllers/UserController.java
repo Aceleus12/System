@@ -56,7 +56,7 @@ public class UserController {
         return ResponseEntity.ok(userService.addNew(userRequest));
     }
 
-    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/api/user/all")
     public ResponseEntity<List<UserResponse>> getAll() {
         return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
