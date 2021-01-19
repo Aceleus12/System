@@ -50,7 +50,7 @@ public class UserController {
     }
 
 
-    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping("/api/user/add_user")
     public ResponseEntity addNew(@RequestBody AddUserRequest userRequest) {
         return ResponseEntity.ok(userService.addNew(userRequest));

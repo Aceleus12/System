@@ -14,4 +14,5 @@ public class UserResponse {
     private String name;
     private String pesel;
     private String fatherName;
+    private int money;
 }

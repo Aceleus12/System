@@ -20,4 +20,6 @@ public interface UserService {
     UserResponse get(String user_id);
 
     JwtResponse signIn(LoginRequest loginRequest);
+
+    void addMoney(String userID, int money);
 }

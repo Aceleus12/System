@@ -28,6 +28,7 @@ public class UserEntity {
     private String surname;
     private String name;
     private String pesel;
+    private int money;
     private String fatherName;
     @OneToMany(mappedBy = "user", cascade=CascadeType.REMOVE)
     private List<GainedCertificateEntity> gainedCertificateEntityList  = new ArrayList<>();

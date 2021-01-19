@@ -6,10 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.edu.wat.demo.dtos.request.StartGainingCertificateRequest;
 import pl.edu.wat.demo.dtos.response.GainedCertificateResponse;
 import pl.edu.wat.demo.dtos.response.GainedStepResponse;
-import pl.edu.wat.demo.entities.CertificateEntity;
-import pl.edu.wat.demo.entities.GainedStepEntity;
-import pl.edu.wat.demo.entities.StepEntity;
-import pl.edu.wat.demo.entities.GainedCertificateEntity;
+import pl.edu.wat.demo.entities.*;
 import pl.edu.wat.demo.repositories.CertificateRepository;
 import pl.edu.wat.demo.repositories.GainedCertificateRepository;
 import pl.edu.wat.demo.repositories.GainedStepRepository;
@@ -80,15 +77,20 @@ public class GainedCertificateServiceImpl implements GainedCertificateService {
         if(certificateRepository.findById(certificateRequest.getCertificateID()).isPresent()){
             CertificateEntity certificateEntity = certificateRepository.findById(certificateRequest.getCertificateID()).get();
             if(userRepository.findById(certificateRequest.getUserId()).isPresent()){
-                if((gainedCertificateRepository.findByCertificateAndUser(certificateEntity,userRepository.findById(certificateRequest.getUserId()).get()).isEmpty())){
+                UserEntity userEntity = userRepository.findById(certificateRequest.getUserId()).get();
+                int cost = certificateEntity.getCost();
+                int userMoney = userEntity.getMoney();
+                if((gainedCertificateRepository.findByCertificateAndUser(certificateEntity,userEntity).isEmpty()) && cost<=userMoney) {
+                    userEntity.setMoney(userMoney-cost);
                     GainedCertificateEntity gainedCertificateEntity = new GainedCertificateEntity();
-                    gainedCertificateEntity.setCertificate(certificateRepository.findById(certificateRequest.getCertificateID()).get());
-                    gainedCertificateEntity.setUser(userRepository.findById(certificateRequest.getUserId()).get());
+                    gainedCertificateEntity.setCertificate(certificateEntity);
+                    gainedCertificateEntity.setUser(userEntity);
                     gainedCertificateEntity.setGained(false);
                     gainedCertificateEntity.setCollected(false);
-                    StepEntity firstStep = certificateRepository.findById(certificateRequest.getCertificateID()).get().getFirstStep();
+                    StepEntity firstStep = certificateEntity.getFirstStep();
                     gainedCertificateRepository.save(gainedCertificateEntity);
-                    gainedStepService.startStep(firstStep.getId(),certificateRequest.getUserId(),gainedCertificateEntity);
+                    userRepository.save(userEntity);
+                    gainedStepService.startStep(firstStep.getId(),userEntity.getId(),gainedCertificateEntity);
                     return 1;
                 }
                 else {

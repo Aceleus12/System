@@ -46,6 +46,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void addMoney(String userID, int money) {
+        if(userRepository.findById(userID).isPresent()){
+            UserEntity user = userRepository.findById(userID).get();
+            user.setMoney(user.getMoney()+money);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
     public List<UserResponse> getAll() {
         return StreamSupport.stream(userRepository.findAll().spliterator(), false)
                 .map(userEntity -> new UserResponse(
@@ -54,7 +63,8 @@ public class UserServiceImpl implements UserService {
                         userEntity.getSurname(),
                         userEntity.getName(),
                         userEntity.getPesel(),
-                        userEntity.getFatherName()
+                        userEntity.getFatherName(),
+                        userEntity.getMoney()
                 )).collect(Collectors.toList());
     }
 
@@ -67,7 +77,8 @@ public class UserServiceImpl implements UserService {
                         userEntity.getSurname(),
                         userEntity.getName(),
                         userEntity.getPesel(),
-                        userEntity.getFatherName()
+                        userEntity.getFatherName(),
+                        userEntity.getMoney()
                 )).collect(Collectors.toList());
     }
 
@@ -111,6 +122,7 @@ public class UserServiceImpl implements UserService {
         user.setFatherName(signUpRequest.getFatherName());
         user.setPesel(signUpRequest.getPesel());
         user.setEmail(signUpRequest.getEmail());
+        user.setMoney(100);
         userRepository.save(user);
 
         Set<String> strRoles = signUpRequest.getRole();
@@ -166,7 +178,8 @@ public class UserServiceImpl implements UserService {
                     user.getSurname(),
                     user.getName(),
                     user.getPesel(),
-                    user.getFatherName()
+                    user.getFatherName(),
+                    user.getMoney()
             );
         }
         else{

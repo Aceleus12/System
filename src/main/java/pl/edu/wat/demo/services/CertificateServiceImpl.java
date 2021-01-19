@@ -106,6 +106,7 @@ public class CertificateServiceImpl implements CertificateService {
         CertificateEntity certificateEntity = new CertificateEntity();
         certificateEntity.setName(certificateRequest.getName());
         certificateEntity.setDescription(certificateRequest.getDescription());
+        certificateEntity.setCost(certificateRequest.getCost());
         certificateRepository.save(certificateEntity);
         List<StepEntity> list = addStepEntityList(certificateRequest.getCertificateSteps(),certificateEntity);
         certificateEntity.setStepEntityList(list);

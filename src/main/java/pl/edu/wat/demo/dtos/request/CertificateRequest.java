@@ -8,5 +8,6 @@ import java.util.List;
 public class CertificateRequest {
     private String name;
     private String description;
+    private int cost;
     private List<StepRequest> certificateSteps;
 }

@@ -19,6 +19,7 @@ public class CertificateEntity {
     private String id;
     private String name;
     private String description;
+    private int cost;
     @NotNull
     @OneToOne
     private StepEntity firstStep;
