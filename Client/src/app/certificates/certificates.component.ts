@@ -67,6 +67,7 @@ export class CertificatesComponent implements OnInit {
       description: ['', Validators.required],
       certDescription: ['', Validators.required],
       nameStep: ['', Validators.required],
+      cost: ['', Validators.required]
     });
   }
 
@@ -74,6 +75,7 @@ export class CertificatesComponent implements OnInit {
     this.certificateService.getCertificates().subscribe(
       (data) => {
         this.certificates = data;
+        debugger;
       },
       (error) => {
         console.log(error);
@@ -86,6 +88,7 @@ export class CertificatesComponent implements OnInit {
       name: this.addCertificateForm.get('name').value,
       certificateSteps: this.steps,
       description: this.addCertificateForm.get('certDescription').value,
+      cost: this.addCertificateForm.get('cost').value
     };
 
     this.certificateService.addCertificate(this.certificate).subscribe(

@@ -15,4 +15,5 @@ public class CertificateResponse {
     private String description;
     private String firstStepId;
     private List<StepResponse> certificateSteps;
+    private int cost;
 }

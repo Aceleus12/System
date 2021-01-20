@@ -1,0 +1,21 @@
+<div class="position-relative overflow-hidden p-1 text-center bg-light">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+      <h1 class="display-4 font-weight-normal">Twój obecny stan konta to: {{ user.money }} złotych</h1>
+      <p class="lead font-weight-normal mb-5">
+        Wprowadź kwotę doładowania, a następnie przejdź do kasy!
+      </p>
+      
+      <div class="w-100 mb-3">
+        <input id="input" [(ngModel)]="model.cost" class="form-control" style="width: 100%;" type="text" placeholder="Kwota...">
+      </div>
+      
+      <button
+        class="btn btn-outline-secondary"
+        style=" width: 100%;"
+        [disabled]="model.cost.length==0"
+        (click)="charge()"
+        >Przejdź do kasy</button
+      >
+  
+    </div>
+  </div>

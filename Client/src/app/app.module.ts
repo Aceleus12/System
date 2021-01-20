@@ -18,6 +18,10 @@ import { CertificatesOfUserComponent } from './certificates-of-user/certificates
 import { AdminGuard } from './_guards/admin.guard';
 import { UserGuard } from './_guards/user.guard';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { MoneyComponent } from './money/money.component';
+import { SuccessComponent } from './success/success.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FailureComponent } from './failure/failure.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -31,7 +35,10 @@ export function tokenGetter() {
       UserDetailsComponent,
       LoginComponent,
       CertificatesOfUserComponent,
-      ChangePasswordComponent
+      ChangePasswordComponent,
+      MoneyComponent,
+      SuccessComponent,
+      FailureComponent
    ],
   imports: [
     BrowserModule,
@@ -46,6 +53,7 @@ export function tokenGetter() {
         allowedDomains: ['localhost:8080'],
       },
     }),
+    BrowserAnimationsModule,
   ],
   providers: [ErrorInterceptorProvider, UserDetailResolver, AdminGuard, UserGuard],
   bootstrap: [AppComponent]

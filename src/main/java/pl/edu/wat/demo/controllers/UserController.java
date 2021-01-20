@@ -4,27 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.demo.dtos.request.AddUserRequest;
 import pl.edu.wat.demo.dtos.request.LoginRequest;
-import pl.edu.wat.demo.dtos.request.UserRequest;
 import pl.edu.wat.demo.dtos.response.GainedCertificateResponse;
 import pl.edu.wat.demo.dtos.response.GainedStepResponse;
 import pl.edu.wat.demo.dtos.response.JwtResponse;
 import pl.edu.wat.demo.dtos.response.UserResponse;
-import pl.edu.wat.demo.security.jwt.JwtUtils;
 import pl.edu.wat.demo.services.GainedCertificateService;
 import pl.edu.wat.demo.services.GainedStepService;
-import pl.edu.wat.demo.services.UserDetailsImpl;
 import pl.edu.wat.demo.services.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -50,13 +42,13 @@ public class UserController {
     }
 
 
-//    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping("/api/user/add_user")
     public ResponseEntity addNew(@RequestBody AddUserRequest userRequest) {
         return ResponseEntity.ok(userService.addNew(userRequest));
     }
 
-    //@PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/api/user/all")
     public ResponseEntity<List<UserResponse>> getAll() {
         return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
@@ -75,7 +67,7 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/api/user/{id}")
     public ResponseEntity<UserResponse> get(@PathVariable String id) {
         return new ResponseEntity<>(userService.get(id), HttpStatus.OK);

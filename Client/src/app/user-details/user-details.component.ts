@@ -89,7 +89,7 @@ export class UserDetailsComponent implements OnInit {
         console.log('success');
       },
       (error) => {
-        console.log(error);
+        this.alertifyService.warning('Nie można rozpocząć procedury.');
       }
     );
   }

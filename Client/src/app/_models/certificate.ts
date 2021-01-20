@@ -4,4 +4,5 @@ export interface Certificate {
     description: string;
     firstStepId: number;
     certificateSteps: any[];
+    cost: number;
 }

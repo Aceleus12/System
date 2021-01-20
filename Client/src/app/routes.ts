@@ -2,7 +2,10 @@ import { Routes } from '@angular/router';
 import { CertificatesOfUserComponent } from './certificates-of-user/certificates-of-user.component';
 import { CertificatesComponent } from './certificates/certificates.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { FailureComponent } from './failure/failure.component';
 import { LoginComponent } from './login/login.component';
+import { MoneyComponent } from './money/money.component';
+import { SuccessComponent } from './success/success.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { UsersComponent } from './users/users.component';
 import { AdminGuard } from './_guards/admin.guard';
@@ -16,6 +19,24 @@ export const appRoutes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AdminGuard],
     component: UsersComponent,
+  },
+  {
+    path: 'failure',
+    runGuardsAndResolvers: 'always',
+    canActivate: [UserGuard],
+    component: FailureComponent
+  },
+  {
+    path: 'success',
+    runGuardsAndResolvers: 'always',
+    canActivate: [UserGuard],
+    component: SuccessComponent
+  },
+  {
+    path: 'add-money',
+    runGuardsAndResolvers: 'always',
+    canActivate: [UserGuard],
+    component: MoneyComponent
   },
   {
     path: 'certificates',

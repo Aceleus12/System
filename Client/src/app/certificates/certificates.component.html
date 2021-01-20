@@ -126,6 +126,34 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <label for="cost">Cena [pln]</label>
+            <input
+              type="number"
+              [ngClass]="{
+                'is-invalid':
+                addCertificateForm.get('cost').errors &&
+                addCertificateForm.get('cost').touched
+              }"
+              formControlName="cost"
+              class="form-control"
+              id="cost"
+              placeholder=""
+              value=""
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="
+              addCertificateForm.get('cost').touched &&
+              addCertificateForm.get('cost').hasError('required')
+              "
+            >
+              Wprowadź cenę certyfikatu.
+            </div>
+          </div>
+        </div>
 
         <p *ngIf="steps.length==0">Brak kroków.</p>
         <p *ngIf="steps.length!=0">Lista kroków:</p>
@@ -213,6 +241,7 @@
     class="modal-body" 
   >
     <p>Opis: {{ certificateForModal.description }}</p>
+    <p>Cena: {{ certificateForModal.cost }} zł</p>
     <p *ngIf="isEditable">Liczba kroków: {{certificateForModal.certificateSteps.length}}</p>
     <div *ngFor="let step of certificateForModal.certificateSteps; let i=index" >
       <div style="display: inline-block; width: 100%;">     

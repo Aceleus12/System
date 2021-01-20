@@ -54,7 +54,7 @@ public class CertificateServiceImpl implements CertificateService {
                                     java.util.Optional.ofNullable((certificateStepEntity.getNextStep()!=null)?certificateStepEntity.getNextStep().getId():null),
                                     certificateStepEntity.getCertificate().getId()
                             )
-                    ).collect(Collectors.toList())
+                    ).collect(Collectors.toList()), certificateEntity.getCost()
             );
         }
         else{
@@ -96,7 +96,7 @@ public class CertificateServiceImpl implements CertificateService {
                                         java.util.Optional.ofNullable((certificateStepEntity.getFileEntity()!=null)?certificateStepEntity.getFileEntity().getId():null),
                                         java.util.Optional.ofNullable((certificateStepEntity.getNextStep()!=null)?certificateStepEntity.getNextStep().getId():null),
                                         certificateStepEntity.getCertificate().getId()
-                                )).collect(Collectors.toList())
+                                )).collect(Collectors.toList()), certificateEntity.getCost()
                 )
         ).collect(Collectors.toList());
     }
@@ -130,7 +130,7 @@ public class CertificateServiceImpl implements CertificateService {
                             java.util.Optional.ofNullable((certificateStepEntity.getFileEntity()!=null)?certificateStepEntity.getFileEntity().getId():null),
                             java.util.Optional.ofNullable((certificateStepEntity.getNextStep()!=null)?certificateStepEntity.getNextStep().getId():null),
                         certificateStepEntity.getCertificate().getId()
-                    )).collect(Collectors.toList())
+                    )).collect(Collectors.toList()), certificateEntity.getCost()
             )
         ).collect(Collectors.toList());
     }
